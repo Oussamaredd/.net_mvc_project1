@@ -78,15 +78,6 @@ Open: `http://localhost:<port>/photos`
 
 ---
 
-## Notes / Limitations
-
-- Images are stored in the database as `byte[]`.  
-  (Great for learning/demo; in production you’d typically store files in blob storage + CDN.)
-- You may see NuGet security warnings (older dependencies).  
-  The UI uses Bootstrap 5 via CDN, but dependency upgrades can be done later.
-
----
-
 ## What I Learned
 
 - Structuring an ASP.NET MVC app (controllers, views, models)
