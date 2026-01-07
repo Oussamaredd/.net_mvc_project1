@@ -1,9 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoSharingApplication", "PhotoSharingApplication\PhotoSharingApplication.csproj", "{4A178C58-A528-49BF-AA07-BBD5C1526447}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FE008748-00FF-498B-A3CF-FA2EDC8E4D5A}"
+	ProjectSection(SolutionItems) = preProject
+		docs\ARCHITECTURE.md = docs\ARCHITECTURE.md
+		docs\ROUTES.md = docs\ROUTES.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "screenshots", "screenshots", "{B89CE478-D4BE-4322-B1CC-FA090FED676D}"
+	ProjectSection(SolutionItems) = preProject
+		docs\screenshots\gallery.PNG = docs\screenshots\gallery.PNG
+		docs\screenshots\main.PNG = docs\screenshots\main.PNG
+		docs\screenshots\photo-details.PNG = docs\screenshots\photo-details.PNG
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +31,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B89CE478-D4BE-4322-B1CC-FA090FED676D} = {FE008748-00FF-498B-A3CF-FA2EDC8E4D5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95F23A79-5D00-43A6-AE6D-93690E0A4E55}

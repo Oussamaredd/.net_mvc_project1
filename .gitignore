@@ -1,0 +1,19 @@
+# Visual Studio / IIS Express
+.vs/
+**/*.suo
+**/*.user
+**/*.userosscache
+**/*.sln.docstates
+.applicationhost.config
+
+# Build outputs
+**/bin/
+**/obj/
+
+# NuGet packages folder (you use packages.config, so restore will re-download)
+packages/
+
+# Local databases (if you ever have them)
+**/App_Data/*.mdf
+**/App_Data/*.ldf
+**/App_Data/*.log

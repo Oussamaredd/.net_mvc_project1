@@ -1,24 +1,131 @@
-﻿
+﻿@model PhotoSharingApplication.Models.ViewModels.PhotoIndexViewModel
 @{
-    Layout = null;
+    ViewBag.Title = "All Photos";
+
+    Func<int, string> PageUrl = p => Url.Action("Index", "Photo", new
+    {
+        page = p,
+        q = Model.Query,
+        sort = Model.Sort
+    });
+
+    var hasFilters =
+        !string.IsNullOrWhiteSpace(Model.Query) ||
+        (!string.IsNullOrWhiteSpace(Model.Sort) && Model.Sort != "latest");
+
+    var startItem = (Model.TotalCount == 0) ? 0 : ((Model.Page - 1) * Model.PageSize) + 1;
+    var endItem = (Model.TotalCount == 0) ? 0 : Math.Min(Model.Page * Model.PageSize, Model.TotalCount);
 }
 
-<!DOCTYPE html>
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
+    <div>
+        <h1 class="h3 mb-1">Nature Gallery</h1>
+        <p class="text-muted mb-0">Explore recent uploads. Search, sort, and open a photo to see details and comments.</p>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>All Photos</title>
-</head>
-<body>
-    <div> 
-        <h2>All Photos</h2>
+        <div class="small text-muted mt-2">
+            @if (Model.TotalCount == 0)
+            {
+                <span>No photos found.</span>
+            }
+            else
+            {
+                <span>Showing <strong>@startItem–@endItem</strong> of <strong>@Model.TotalCount</strong> photos</span>
+            }
 
-        <p>
-            @Html.ActionLink("Add a Photo", "Create", "Photo")
-        </p>
-
-        @Html.Action("_PhotoGallery", "Photo")
+            @if (hasFilters)
+            {
+                <span class="mx-2">•</span>
+                <a class="link-success" href="@Url.Action("Index","Photo")">Reset</a>
+            }
+        </div>
     </div>
-</body>
-</html>
+
+    <a class="btn btn-success" href="@Url.Action("Create","Photo")">+ Add a Photo</a>
+</div>
+
+<form class="row g-2 align-items-end mb-4" method="get" action="@Url.Action("Index","Photo")">
+    <!-- Forces any new search/sort to start on page 1 -->
+    <input type="hidden" name="page" value="1" />
+
+    <div class="col-12 col-md-6">
+        <label class="form-label">Search</label>
+        <input class="form-control" type="text" name="q" value="@Model.Query" placeholder="title, user, description..." />
+    </div>
+
+    <div class="col-8 col-md-3">
+        <label class="form-label">Sort</label>
+        <select class="form-select" name="sort">
+            <option value="latest" @(Model.Sort == "latest" ? "selected" : "")>Latest</option>
+            <option value="oldest" @(Model.Sort == "oldest" ? "selected" : "")>Oldest</option>
+            <option value="title" @(Model.Sort == "title" ? "selected" : "")>Title</option>
+            <option value="user" @(Model.Sort == "user" ? "selected" : "")>User</option>
+        </select>
+    </div>
+
+    <div class="col-4 col-md-3 d-grid">
+        <button class="btn btn-outline-success" type="submit">Apply</button>
+    </div>
+</form>
+
+@Html.Partial("_PhotoGallery", Model.Photos,
+    new ViewDataDictionary(ViewData) { { "q", Model.Query } }
+)
+
+@if (Model.TotalPages > 1)
+{
+    <nav class="mt-4" aria-label="Photos pagination">
+        <ul class="pagination justify-content-center flex-wrap">
+
+            <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
+                @if (Model.Page <= 1)
+                {
+                    <span class="page-link">Previous</span>
+                }
+                else
+                {
+                    <a class="page-link" href="@PageUrl(Model.Page - 1)">Previous</a>
+                }
+            </li>
+
+            @{
+                var start = Model.Page - 2;
+                if (start < 1) { start = 1; }
+
+                var end = start + 4;
+                if (end > Model.TotalPages) { end = Model.TotalPages; }
+
+                if (end - start < 4)
+                {
+                    start = end - 4;
+                    if (start < 1) { start = 1; }
+                }
+            }
+
+            @for (int p = start; p <= end; p++)
+            {
+                <li class="page-item @(p == Model.Page ? "active" : "")">
+                    @if (p == Model.Page)
+                    {
+                        <span class="page-link">@p</span>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="@PageUrl(p)">@p</a>
+                    }
+                </li>
+            }
+
+            <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")">
+                @if (Model.Page >= Model.TotalPages)
+                {
+                    <span class="page-link">Next</span>
+                }
+                else
+                {
+                    <a class="page-link" href="@PageUrl(Model.Page + 1)">Next</a>
+                }
+            </li>
+
+        </ul>
+    </nav>
+}

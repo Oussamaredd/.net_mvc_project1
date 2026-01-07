@@ -1,21 +1,59 @@
-﻿@model IEnumerable<PhotoSharingApplication.Models.Photo> 
+﻿@using System.Linq
+@using PhotoSharingApplication.Helpers
+@model IEnumerable<PhotoSharingApplication.Models.Photo>
 
-@foreach (var item in Model)
+@{
+    var q = ViewData["q"] as string; // passed from Index
+}
+
+@if (Model == null || !Model.Any())
 {
-    <h3>"@item.Title"</h3>
+    <div class="alert alert-warning mb-0">
+        No photos yet. <a href="@Url.Action("Create","Photo")">Add your first one</a>.
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card photo-card h-100 border-0 shadow-sm position-relative overflow-hidden">
 
-    if (item.PhotoFile != null)
-    {
-        <img width="200" src="@Url.Action("GetImage","Photo", new { id = item.PhotoID })" />
-    }
+                    @if (item.PhotoFile != null)
+                    {
+                        <img class="card-img-top photo-thumb"
+                             loading="lazy"
+                             src="@Url.Action("GetImage","Photo", new { id = item.PhotoID })"
+                             alt="@item.Title" />
+                    }
+                    else
+                    {
+                        <div class="photo-thumb d-flex align-items-center justify-content-center text-muted bg-light">
+                            No image available
+                        </div>
+                    }
 
-    <p>
-        Created By: @Html.DisplayFor(model => item.UserName)
-    </p>
+                    <div class="card-body">
+                        <h3 class="h6 mb-2 text-dark">
+                            @Html.Highlight(item.Title, q)
+                        </h3>
 
-    <p>
-        Created On:  @Html.DisplayFor(model => item.CreatedDate)
-    </p>
+                        <div class="d-flex flex-wrap gap-2 small text-muted">
+                            <span>by <span class="fw-semibold">@Html.Highlight(item.UserName, q)</span></span>
+                            <span>•</span>
+                            <span>@item.CreatedDate.ToString("yyyy-MM-dd")</span>
+                        </div>
+                    </div>
 
-    @Html.ActionLink("Display", "Display", new { id = item.PhotoID })
+                    <div class="card-footer bg-transparent border-0 pt-0 pb-3 px-3">
+                        <span class="text-success small fw-semibold">Open →</span>
+                    </div>
+
+                    <!-- Stretched link: whole card clickable, no nested button/link -->
+                    <a class="stretched-link" href="@Url.Action("Display","Photo", new { id = item.PhotoID })" aria-label="Open @item.Title"></a>
+                </div>
+            </div>
+        }
+    </div>
 }

@@ -7,7 +7,7 @@ using System.IO;
 
 namespace PhotoSharingApplication.Models
 {
-    public class PhotoSharingInitializer : DropCreateDatabaseAlways<PhotoSharingContext>
+    public class PhotoSharingInitializer : CreateDatabaseIfNotExists<PhotoSharingContext>
     {
         //This gets a byte array for a file at the path specified
         //The path is relative to the route of the web site

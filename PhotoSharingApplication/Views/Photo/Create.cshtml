@@ -1,56 +1,42 @@
 ﻿@model PhotoSharingApplication.Models.Photo
-
 @{
-    Layout = null;
+    ViewBag.Title = "Add a Photo";
 }
 
-<!DOCTYPE html>
+<h1 class="h4 mb-3">Add a new photo</h1>
+<p class="text-muted mb-4">Upload a photo, add a title and a short description. Keep it natural 🌿</p>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create New Photo</title>
-</head>
-<body>
-    <div> 
-        <h2>Create New Photo</h2>
+@using (Html.BeginForm("Create", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
-        @using (Html.BeginForm("Create", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.ValidationSummary(true)
-
-            <p>
-                @Html.LabelFor(model => model.Title):
-                @Html.EditorFor(model => model.Title)
-                @Html.ValidationMessageFor(model => model.Title)
-            </p>
-
-            <p>
-                @Html.LabelFor(model => model.PhotoFile):
-                <input type="file" name="Image" />
-            </p>
-
-            <p>
-                @Html.LabelFor(model => model.Description):
-                @Html.EditorFor(model => model.Description)
-                @Html.ValidationMessageFor(model => model.Description)
-            </p>
-
-            <p>
-                @Html.LabelFor(model => model.UserName):
-                @Html.DisplayFor(model => model.UserName)
-            </p>
-
-            <p>
-                @Html.LabelFor(model => model.CreatedDate):
-                @Html.DisplayFor(model => model.CreatedDate)
-            </p>
-
-            <p>
-                <input type="submit" value="Create" />
-                @Html.ActionLink("Back to List", "Index")
-            </p>
-        }
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Title, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "e.g., Morning in the forest" })
+        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger small" })
     </div>
-</body>
-</html>
+
+    <div class="mb-3">
+        <label class="form-label">Photo</label>
+        <input class="form-control" type="file" name="image" accept="image/*" />
+        <div class="form-text">PNG/JPG recommended. The image is stored in the database in this project.</div>
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+        @Html.TextAreaFor(m => m.Description, 4, 40, new { @class = "form-control", placeholder = "A short description…" })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger small" })
+    </div>
+
+    <div class="mb-4">
+        @Html.LabelFor(m => m.UserName, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Your name" })
+        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger small" })
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">Save</button>
+        <a class="btn btn-outline-secondary" href="@Url.Action("Index","Photo")">Cancel</a>
+    </div>
+}
