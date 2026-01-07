@@ -62,28 +62,19 @@ Main routes:
 Open `Web.config` and set the connection string `PhotoSharingContext`.
 
 Example LocalDB:
-```xml
+
 <add name="PhotoSharingContext"
      connectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=PhotoSharingDb;Integrated Security=True"
      providerName="System.Data.SqlClient" />
 
 ### Apply migrations (Package Manager Console)
 
-```powershell
+in powershell:
 Update-Database -Verbose
 
 ### Run (IIS Express)
 
 Open: `http://localhost:<port>/photos`
-
----
-
-## Notes / Limitations
-
-- Images are stored in the database as `byte[]`.  
-  (Great for learning/demo; in production you’d typically store files in blob storage + CDN.)
-- You may see NuGet security warnings (older dependencies).  
-  The UI uses Bootstrap 5 via CDN, but dependency upgrades can be done later.
 
 ---
 
