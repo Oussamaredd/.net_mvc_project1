@@ -8,7 +8,7 @@ Users can browse photos, open details, and upload new images (stored in the data
 ## Preview
 
 ![Gallery](docs/screenshots/gallery.png)
-![Photo Details](docs/screenshots/photo-details.png)
+![Photo](docs/screenshots/photo.png)
 ![Create](docs/screenshots/create.png)
 
 ## Features
