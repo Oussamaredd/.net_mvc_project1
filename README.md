@@ -62,14 +62,14 @@ Main routes:
 Open `Web.config` and set the connection string `PhotoSharingContext`.
 
 Example LocalDB:
-```xml
+
 <add name="PhotoSharingContext"
      connectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=PhotoSharingDb;Integrated Security=True"
      providerName="System.Data.SqlClient" />
 
 ### Apply migrations (Package Manager Console)
 
-```powershell
+in powershell:
 Update-Database -Verbose
 
 ### Run (IIS Express)
