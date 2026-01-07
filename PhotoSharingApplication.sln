@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{FE008748-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "screenshots", "screenshots", "{B89CE478-D4BE-4322-B1CC-FA090FED676D}"
 	ProjectSection(SolutionItems) = preProject
-		docs\screenshots\gallery.PNG = docs\screenshots\gallery.PNG
-		docs\screenshots\main.PNG = docs\screenshots\main.PNG
-		docs\screenshots\photo-details.PNG = docs\screenshots\photo-details.PNG
+		docs\screenshots\create.png = docs\screenshots\create.png
+		docs\screenshots\gallery.png = docs\screenshots\gallery.png
+		docs\screenshots\photo.png = docs\screenshots\photo.png
 	EndProjectSection
 EndProject
 Global
